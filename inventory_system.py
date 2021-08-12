@@ -1,4 +1,6 @@
 '''
+current output:
+
 PS C:\Users\huiwa\Documents>  c:; cd 'c:\Users\huiwa\Documents'; & 'C:\Users\huiwa\AppData\Local\Microsoft\WindowsApps\python3.9.exe' 'c:\Users\huiwa\.vscode\extensions\ms-python.python-2021.7.1060902895\pythonFiles\lib\python\debugpy\launcher' '56273' '--' 'c:\Users\huiwa\Documents\Untitled-1.py' 
 check out
 show inventory
