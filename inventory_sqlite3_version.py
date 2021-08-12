@@ -9,6 +9,8 @@ show transcation
 
 '''
 
+# I am using sqlite3 now because it is built-in. I will switch to MYSQL when the basic logic is ready.
+
 # https://docs.python.org/3/library/sqlite3.html
 # sqlite3 — DB-API 2.0 interface for SQLite databases¶
 import sqlite3
