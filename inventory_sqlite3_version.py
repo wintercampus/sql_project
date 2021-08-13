@@ -12,7 +12,7 @@
 # sqlite3 — DB-API 2.0 interface for SQLite databases¶
 import sqlite3
 
-db = 'warehouse1.db'
+db = 'warehouse2.db'
 
 def create_db():
     conn = sqlite3.connect(db, timeout=1)
@@ -23,7 +23,7 @@ def create_db():
     # If you're using SQLite version 3.3+ you can easily create a table with:
     table_name = "inventory"
     curs.execute('''CREATE TABLE IF NOT EXISTS inventory (name VARCHAR(20) PRIMARY KEY, count INT)''')
-    
+
     # start with 10 items with 0 inventory each
     curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_1", 0)')
     curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_2", 0)')
@@ -35,7 +35,6 @@ def create_db():
     curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_8", 0)')
     curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_9", 0)')
     curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_x", 0)')
-    
     conn.commit()
     conn.close()
 
@@ -65,7 +64,7 @@ def check_in():
     print("check in")
     conn = sqlite3.connect(db, timeout=1)
     curs = conn.cursor()
-    curs.execute('INSERT INTO inventory VALUES("macbook_pro", 10)')
+    curs.execute('REPLACE INTO inventory VALUES("iphone_x", 10)')
     conn.commit()
     conn.close()
 
@@ -75,7 +74,7 @@ def check_out():
 
 
 create_db()
-#check_in()
+check_in()
 check_out()
 show_inventory()
 show_transcation()
