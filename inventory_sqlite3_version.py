@@ -25,16 +25,16 @@ def create_db():
     curs.execute('''CREATE TABLE IF NOT EXISTS inventory (name VARCHAR(20) PRIMARY KEY, count INT)''')
     
     # start with 10 items with 0 inventory each
-    curs.execute('INSERT OR REPLACE INTO inventory VALUES("macbook_pro", 0)')
-    curs.execute('INSERT OR REPLACE INTO inventory VALUES("ipad", 0)')
-    curs.execute('INSERT OR REPLACE INTO inventory VALUES("ipod", 0)')
-    curs.execute('INSERT OR REPLACE INTO inventory VALUES("5v1a_charger", 0)')
-    curs.execute('INSERT OR REPLACE INTO inventory VALUES("appletv", 0)')
+    curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_1", 0)')
+    curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_2", 0)')
+    curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_3", 0)')
+    curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_4", 0)')
+    curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_5", 0)')
+    curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_6", 0)')
+    curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_7", 0)')
     curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_8", 0)')
     curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_9", 0)')
     curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_x", 0)')
-    curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_11", 0)')
-    curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_12", 0)')
     
     conn.commit()
     conn.close()
