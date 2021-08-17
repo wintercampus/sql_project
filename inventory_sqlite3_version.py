@@ -1,11 +1,3 @@
-# current output:
-# PS C:\Users\huiwa\Documents>  c:; cd 'c:\Users\huiwa\Documents'; & 'C:\Users\huiwa\AppData\Local\Microsoft\WindowsApps\python3.9.exe' 'c:\Users\huiwa\.vscode\extensions\ms-python.python-2021.7.1060902895\pythonFiles\lib\python\debugpy\launcher' '56273' '--' 'c:\Users\huiwa\Documents\Untitled-1.py' 
-#check out
-#show inventory
-#show transcation
-#('macbook_pro', 10)
-#
-
 # I am using sqlite3 now because it is built-in. I will switch to MYSQL when the basic logic is ready.
 
 # https://docs.python.org/3/library/sqlite3.html
@@ -13,6 +5,9 @@
 import sqlite3
 
 db = 'warehouse2.db'
+
+items = ["iphone_1", "iphone_2", "iphone_3", "iphone_4", "iphone_5",
+         "iphone_6", "iphone_7", "iphone_8", "iphone_9", "iphone_x"]
 
 def create_db():
     conn = sqlite3.connect(db, timeout=1)
@@ -25,25 +20,12 @@ def create_db():
     curs.execute('''CREATE TABLE IF NOT EXISTS inventory (name VARCHAR(20) PRIMARY KEY, count INT)''')
 
     # start with 10 items with 0 inventory each
-    curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_1", 0)')
-    curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_2", 0)')
-    curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_3", 0)')
-    curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_4", 0)')
-    curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_5", 0)')
-    curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_6", 0)')
-    curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_7", 0)')
-    curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_8", 0)')
-    curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_9", 0)')
-    curs.execute('INSERT OR REPLACE INTO inventory VALUES("iphone_x", 0)')
-    conn.commit()
-    conn.close()
-
-def show_inventory():
-    print("show inventory")
-    conn = sqlite3.connect(db, timeout=1)
-    curs = conn.cursor()
-    curs.execute('SELECT * from inventory ORDER BY count DESC')
-    curs.fetchall()
+    print("Initialize inventory")
+    for item in items:
+        insert_cmd = 'INSERT OR REPLACE INTO inventory VALUES("%s", 0)' % item
+        print(insert_cmd)
+        curs.execute(insert_cmd)
+    print("done")
     conn.commit()
     conn.close()
 
@@ -51,30 +33,65 @@ def show_transcation():
     print("show transcation")
     conn = sqlite3.connect(db, timeout=1)
     curs = conn.cursor()
-    # https://stackoverflow.com/questions/12867140/python-mysqldb-get-the-result-of-fetchall-in-a-list
-    # Python MySQLDB: Get the result of fetchall in a list
-    #rows = curs.execute('SELECT * from inventory ORDER BY name')
-    #conn.commit()
-    #conn.close()
-    #print(rows)
-    for row in curs.execute('SELECT * FROM inventory ORDER BY name'):
-        print(row) 
-
-def check_in():
-    print("check in")
-    conn = sqlite3.connect(db, timeout=1)
-    curs = conn.cursor()
-    curs.execute('REPLACE INTO inventory VALUES("iphone_x", 10)')
+    #curs.execute('SELECT * from inventory ORDER BY count DESC')
+    curs.fetchall()
     conn.commit()
     conn.close()
 
-def check_out():
-    print("check out")
-    pass    
+def show_inventory():
+    print("show inventory")
+    conn = sqlite3.connect(db, timeout=1)
+    curs = conn.cursor()
+    # https://stackoverflow.com/questions/12867140/python-mysqldb-get-the-result-of-fetchall-in-a-list
+    # Python MySQLDB: Get the result of fetchall in a list
+    for row in curs.execute('SELECT * FROM inventory ORDER BY name'):
+        print(row) 
 
+def check_in(item, number):
+    print("checking in", number, item)
+    conn = sqlite3.connect(db, timeout=1)
+    curs = conn.cursor()
+    curs.execute('SELECT * FROM inventory WHERE name = "%s"' % (item))
+    rows = curs.fetchall()
+    cur_count = rows[0][1]  #' format : item_str count_str
+    print("there are already", cur_count, item, "in inventory")
+    print("adding", number, item,"to inventory")
+    number += int(cur_count) 
+    curs.execute('UPDATE inventory SET count = %d WHERE name = "%s"' % (number, item))
+    conn.commit()
+    conn.close()
+    print("check-in done")
 
-create_db()
-check_in()
-check_out()
-show_inventory()
-show_transcation()
+def check_out(item, number):
+    print("trying to check out", number, item)
+    conn = sqlite3.connect(db, timeout=1)
+    curs = conn.cursor()
+    curs.execute('SELECT * FROM inventory WHERE name = "%s"' % (item))
+    rows = curs.fetchall()
+    cur_count = rows[0][1]  #' format : item_str count_str
+    print("there are ", cur_count, item, "in inventory")
+    inv_count = int(cur_count)
+    if (inv_count < number):
+       print("no enough inventory to checkout") 
+       return
+
+    print("checking out", number, item,"from inventory")
+    inv_count -= number
+    curs.execute('UPDATE inventory SET count = %d WHERE name = "%s"' % (inv_count, item))
+    conn.commit()
+    conn.close()
+    print("check-out done")
+
+def test():
+    create_db()
+    check_in("iphone_x", 3)
+    show_inventory()
+    check_in("iphone_x", 5)
+    show_inventory()
+    check_out("iphone_x", 100)
+    show_inventory()
+    check_out("iphone_x", 2)
+    show_inventory()
+    show_transcation()
+
+test()
