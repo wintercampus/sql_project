@@ -1,0 +1,73 @@
+
+Initialize inventory
+INSERT OR REPLACE INTO inventory VALUES("iphone_1", 0)
+INSERT OR REPLACE INTO inventory VALUES("iphone_2", 0)
+INSERT OR REPLACE INTO inventory VALUES("iphone_3", 0)
+INSERT OR REPLACE INTO inventory VALUES("iphone_4", 0)
+INSERT OR REPLACE INTO inventory VALUES("iphone_5", 0)
+INSERT OR REPLACE INTO inventory VALUES("iphone_6", 0)
+INSERT OR REPLACE INTO inventory VALUES("iphone_7", 0)
+INSERT OR REPLACE INTO inventory VALUES("iphone_8", 0)
+INSERT OR REPLACE INTO inventory VALUES("iphone_9", 0)
+INSERT OR REPLACE INTO inventory VALUES("iphone_x", 0)
+done
+checking in 3 iphone_x
+there are already 0 iphone_x in inventory
+adding 3 iphone_x to inventory
+check-in done
+show inventory
+('iphone_1', 0)
+('iphone_2', 0)
+('iphone_3', 0)
+('iphone_4', 0)
+('iphone_5', 0)
+('iphone_6', 0)
+('iphone_7', 0)
+('iphone_8', 0)
+('iphone_9', 0)
+('iphone_x', 3)
+checking in 5 iphone_x
+there are already 3 iphone_x in inventory
+adding 5 iphone_x to inventory
+check-in done
+show inventory
+('iphone_1', 0)
+('iphone_2', 0)
+('iphone_3', 0)
+('iphone_4', 0)
+('iphone_5', 0)
+('iphone_6', 0)
+('iphone_7', 0)
+('iphone_8', 0)
+('iphone_9', 0)
+('iphone_x', 8)
+trying to check out 100 iphone_x
+there are  8 iphone_x in inventory
+no enough inventory to checkout
+show inventory
+('iphone_1', 0)
+('iphone_2', 0)
+('iphone_3', 0)
+('iphone_4', 0)
+('iphone_5', 0)
+('iphone_6', 0)
+('iphone_7', 0)
+('iphone_8', 0)
+('iphone_9', 0)
+('iphone_x', 8)
+trying to check out 2 iphone_x
+there are  8 iphone_x in inventory
+checking out 2 iphone_x from inventory
+check-out done
+show inventory
+('iphone_1', 0)
+('iphone_2', 0)
+('iphone_3', 0)
+('iphone_4', 0)
+('iphone_5', 0)
+('iphone_6', 0)
+('iphone_7', 0)
+('iphone_8', 0)
+('iphone_9', 0)
+('iphone_x', 6)
+show transcation
